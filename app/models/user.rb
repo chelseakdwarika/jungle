@@ -12,16 +12,9 @@ class User < ApplicationRecord
     end 
   end
 
-  before_validation :downcase_email
-
   validates :name, presence: true
-  validates :email, presence: true, uniqueness: true
-  validates :password, length: { minimum: 10 }
+  validates :email, presence: true, uniqueness: { case_sensitive: false }
+  validates :password, confirmation: true, length: { minimum: 8 }
+  validates :password_confirmation, presence: true
 
-  private
-
-  def downcase_email
-    self.email = email.downcase if email.present?
-  end
-  
 end
