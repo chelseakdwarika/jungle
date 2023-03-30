@@ -49,5 +49,18 @@ RSpec.describe User, type: :model do
       @existing_user = User.find_by_email('snape@hogwarts.com')
       expect(User.authenticate_with_credentials('snape@hogwarts.com', 'potions666')).to eq(@existing_user)
     end
+
+    it 'should still authenticate email in lower or uppercase text' do
+      @new_user = User.create(email: 'snape@hogwarts.com', name: 'Severus Snape', password: 'potions666', password_confirmation: 'potions666')
+      @existing_user = User.find_by_email('snape@hogwarts.com')
+      expect(User.authenticate_with_credentials('SNAPE@hogwarts.com', 'potions666')).to eq(@existing_user)
+    end
+
+    it 'should still authenticate email with spaces added' do
+      @new_user = User.create(email: 'snape@hogwarts.com', name: 'Severus Snape', password: 'potions666', password_confirmation: 'potions666')
+      @existing_user = User.find_by_email('snape@hogwarts.com')
+      expect(User.authenticate_with_credentials(' snape@hogwarts.com    ', 'potions666')).to eq(@existing_user)
+    end
+
   end
 end
