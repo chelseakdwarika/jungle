@@ -1,6 +1,6 @@
 describe('Jungle Rails', () => {
 
-  beforeEach(() => {
+  before(() => {
     cy.visit('/');
   })
   
